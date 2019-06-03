@@ -1,6 +1,11 @@
 'use strict';
 
 /** ============================================================================
+ * 固定値、共有変数
+ * ===========================================================================*/
+const URL_CSS1 = 'https://hoshutaro.github.io/TODAY/css/main.css';
+
+/** ============================================================================
  * 汎用関数
  * ===========================================================================*/
 
@@ -21,10 +26,36 @@ const outLog = (str) => {
     return;
 }
 
+/**
+ * CSSインポート
+ */
+const importCSS = async () => {
+    
+    let elm_body = document.getElementsByTagName('body')[0];
+    let elm_link = document.createElement('div');
+    elm_link.innerHTML = `<link rel="stylesheet" href="${URL_CSS1}">`;
+    elm_body.appendChild(elm_link);
+    
+    return;
+}
+
 /** ============================================================================
  * メイン処理
  * ===========================================================================*/
 outLog('run main.js');
 
-// CSS読み込み
-let elm_body = document.getElementsByTagName('body')[0];
+/**
+ * 非同期処理を順番に実行させる
+ */
+const runMainFunc = async () => {
+    
+    await importCSS();
+    
+    return;
+}
+
+/**
+ * メイン部
+ */
+runMainFunc();
+
