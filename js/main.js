@@ -4,6 +4,7 @@
  * 固定値、共有変数
  * ===========================================================================*/
 const URL_CSS1 = 'https://hoshutaro.github.io/TODAY/css/main.css';
+const URL_CSS2 = 'https://hoshutaro.github.io/TODAY/css/51-modern-default.css';
 
 /** ============================================================================
  * 汎用関数
@@ -33,7 +34,8 @@ const importCSS = async () => {
     
     let elm_body = document.getElementsByTagName('body')[0];
     let elm_link = document.createElement('div');
-    elm_link.innerHTML = `<link rel="stylesheet" href="${URL_CSS1}">`;
+    elm_link.innerHTML = `<link rel="stylesheet" href="${URL_CSS1}">
+                          <link rel="stylesheet" href="${URL_CSS2}">`;
     elm_body.appendChild(elm_link);
     
     return;
