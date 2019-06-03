@@ -50,16 +50,14 @@ const importCSS = async () => {
  */
 const addSearchForm = (HEADER) => {
 
-    if(HEADER != null){
-        
-        let cont = document.createElement('div');
-        cont.innerHTML = `<div class="kintoneplugin-input-outer">
-                              <input class="kintoneplugin-input-text" type="text" placeholder="検索文字を入力">
-                          </div>
-                          <button class="kintoneplugin-button-dialog-ok" onClick="doSearch()" style="min-width: 60px;">検索</button>`;
-        
-        HEADER.appendChild(cont);
-    }
+    let cont = document.createElement('div');
+    cont.innerHTML = `<div class="kintoneplugin-input-outer">
+                          <input class="kintoneplugin-input-text" type="text" placeholder="検索文字を入力">
+                      </div>
+                      <button class="kintoneplugin-button-dialog-ok" onClick="doSearch()" style="min-width: 60px;">検索</button>`;
+    
+    HEADER.appendChild(cont);
+
     return;
 }
 
@@ -78,8 +76,8 @@ kintone.events.on('app.record.index.show', (event) => {
     return event;
 });
 const appRecordIndexShow = async () => {
+    // ヘッダースペース取得
     const HEADER = await kintone.app.getHeaderMenuSpaceElement();
-
     // 検索フォーム生成
     await addSearchForm(HEADER);
     
