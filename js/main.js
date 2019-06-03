@@ -31,6 +31,7 @@ const outLog = (str) => {
  * CSSインポート
  */
 const importCSS = async () => {
+    outLog('run importCSS()');
     
     let elm_body = document.getElementsByTagName('body')[0];
     let elm_link = document.createElement('div');
@@ -49,6 +50,7 @@ const importCSS = async () => {
  * 検索フォーム設置
  */
 const addSearchForm = (HEADER) => {
+    outLog('run addSearchForm()');
 
     let cont = document.createElement('div');
     cont.innerHTML = `<div class="kintoneplugin-input-outer">
@@ -70,6 +72,8 @@ outLog('run main.js');
  * レコード一覧画面
  */
 kintone.events.on('app.record.index.show', (event) => {
+    outLog('Kintone Event app.record.index.show');
+    
     // 非同期処理を制御
     appRecordIndexShow();
 
@@ -88,6 +92,7 @@ const appRecordIndexShow = async () => {
  * 非同期処理を順番に実行させる
  */
 const runMainFunc = async () => {
+    outLog('run runMainFunc()');
     
     await importCSS();
     
