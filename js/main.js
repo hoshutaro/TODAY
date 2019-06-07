@@ -223,6 +223,8 @@ const appRecordIndexShow = async () => {
     const HEADER = await kintone.app.getHeaderMenuSpaceElement();
     // 検索フォーム生成
     await addSearchForm(HEADER);
+    // 共有メモフォーム生成
+    await addMemoForm();
     
     return;
 }
