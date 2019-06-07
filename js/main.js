@@ -201,6 +201,8 @@ const saveMemo = async () => {
     
     await kintone.api('/k/v1/record', 'PUT', body);
     
+    location.reload();
+    
     return;
 }
 
