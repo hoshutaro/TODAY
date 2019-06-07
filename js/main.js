@@ -175,8 +175,8 @@ const addMemoForm = async () => {
     const elm_index = document.getElementsByClassName('gaia-argoui-app-index-pager')[0];
     
     let cont = document.createElement('div');
-    cont.innerHTML = `<input type="text" size="70" style="border:solid 0px;" id="memo" value="${memo}">
-                      <button type="button" style="background-color: #fff; border-style: none; color: #248;">save</button>`;
+    cont.innerHTML = `<input type="text" size="70" id="memo" value="${memo}">
+                      <button type="button" style="background-color: #fff; border-style: none; color: #248;" onClick="saveMemo()">save</button>`;
     
     elm_index.appendChild(cont);
 
@@ -184,8 +184,25 @@ const addMemoForm = async () => {
 }
 
 /**
- * 既存メモを入力
+ * メモを保存
  */
+const saveMemo = async () => {
+    outLog('run saveMemo()');
+    
+    const memo = document.getElementById('memo').value;
+    
+    const body = {
+        'app': APP_ID,
+        'id': CONF_MEMO_RECORDID,
+        'record': {
+            '文字列__1行_': {'value': memo}
+        }
+    };
+    
+    await kintone.api('/k/v1/record', 'PUT', body);
+    
+    return;
+}
 
 
 /** ============================================================================
