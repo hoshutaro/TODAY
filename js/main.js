@@ -175,9 +175,9 @@ const addMemoForm = async () => {
     const elm_index = document.getElementsByClassName('gaia-argoui-app-index-pager')[0];
     
     let cont = document.createElement('div');
-    cont.innerHTML = `memo
-                      <input type="text" size="70" id="memo" value="${memo}" style="font-size: 12px">
-                      <button type="button" style="background-color: #fff; border-style: none; color: #248;" onClick="saveMemo()">save</button>`;
+    cont.innerHTML = `<input type="text" size="70" id="memo" value="${memo}" style="font-size: 12px">
+                      <button type="button" style="background-color: #fff; border-style: none; color: #248;" onClick="saveMemo()">save</button>
+                      <input type="image" src="https://static.cybozu.com/contents/k/image/argo/component/recordlist/record-save16.png" onClick="saveMemo()>`;
     
     elm_index.appendChild(cont);
 
