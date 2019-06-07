@@ -177,7 +177,7 @@ const addMemoForm = async () => {
     let cont = document.createElement('div');
     cont.innerHTML = `<input type="text" size="100" id="memo" value="${memo}" style="font-size: 12px">
                       <button type="button" style="background-color: #fff; border-style: none; color: #248;" onClick="saveMemo()">
-                      <img src="https://static.cybozu.com/contents/k/image/argo/component/recordlist/record-save16.png">
+                      <img src="https://static.cybozu.com/contents/k/image/argo/component/recordlist/record-save16.png" style="vertical-align: middle;">
                       </button>`;
     
     elm_index.appendChild(cont);
