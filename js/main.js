@@ -231,19 +231,10 @@ runMainFunc();
 /**
  * レコード一覧画面
  */
-kintone.events.on('app.record.index.show', (event) => {
+kintone.events.on('app.record.index.show', async (event) => {
     outLog('Kintone Event app.record.index.show');
     
-    const syncFunc = async () => {
-        // ヘッダースペース取得
-        const HEADER = await kintone.app.getHeaderMenuSpaceElement();
-        // 検索フォーム生成
-        await addSearchForm(HEADER);
-        
-        return;
-    }
-    
-    // 非同期処理を制御
+    // 非同期処理を制御s
     // appRecordIndexShow();
 
     return event;
