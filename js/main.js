@@ -143,13 +143,15 @@ const copyCaseOwner = (event) => {
     
     let caseOwner = event.record[CODE_TANTOSHA]['value'];
     let copy = '';
-
-    // 複数人いたら全部コピー
-    for(let i=0; i<caseOwner.length; i++){
-        copy = copy + caseOwner[i]['name'] + ',';
+    
+    if(!caseOwner){
+        // 複数人いたら全部コピー
+        for(let i=0; i<caseOwner.length; i++){
+            copy = copy + caseOwner[i]['name'] + ',';
+        }
+        // 最後のカンマは削除
+        copy = copy.slice(0, -1);
     }
-    // 最後のカンマは削除
-    copy = copy.slice(0, -1);
 
     event.record[CODE_TANTOSHA_COPY]['value'] = copy;
     return;
@@ -168,10 +170,14 @@ const splitCaseCategory = (event) => {
     outLog('run splitCaseCategory()');
     
     let caseCategory = event.record[CODE_BUNRUI]['value'];
-    
-    // 特定文字で2分割
-    event.record[CODE_BUNRUI_DAI]['value'] = caseCategory.split(SPLIT_WORD)[0];
-    event.record[CODE_BUNRUI_SYO]['value'] = caseCategory.split(SPLIT_WORD)[1];
+    if(!caseCategory){
+        // 特定文字で2分割
+        event.record[CODE_BUNRUI_DAI]['value'] = caseCategory.split(SPLIT_WORD)[0];
+        event.record[CODE_BUNRUI_SYO]['value'] = caseCategory.split(SPLIT_WORD)[1];
+    } else {
+        event.record[CODE_BUNRUI_DAI]['value'] = '';
+        event.record[CODE_BUNRUI_SYO]['value'] = '';
+    }
     
     return;
 }
@@ -272,7 +278,7 @@ kintone.events.on('app.record.index.show', async () => {
  * レコード編集画面の保存実行前イベント
  */
 kintone.events.on(['app.record.create.submit','app.record.edit.submit'], async (event) => {
-    outLog('Kintone Event app.record.create.submit');
+    outLog(`kintone event ${event['type']}`);
     
     // 担当者コピー
     await copyCaseOwner(event);
@@ -281,17 +287,3 @@ kintone.events.on(['app.record.create.submit','app.record.edit.submit'], async (
     
     return event;
 });
-
-/**
- * レコード編集画面の保存実行前イベント
- */
-//kintone.events.on('app.record.edit.submit', async (event) => {
-//    outLog('Kintone Event app.record.edit.submit');
-//    
-//    // 担当者コピー
-//    await copyCaseOwner(event);
-//    // 分類分割
-//    await splitCaseCategory(event);
-//    
-//    return event;
-//});
