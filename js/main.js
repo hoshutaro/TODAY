@@ -4,6 +4,7 @@
  * 01. 簡易検索（特定フィールドを対象とした単語検索）
  * 02. 担当者ソート（担当者をソート用フィールドへコピー）
  * 03. 分類分割
+ * 04. 条件付き書式（対応状況に応じて文字・背景色を変える）
  * xx. 共有メモ
  * 
  * ===========================================================================*/
@@ -32,7 +33,16 @@ const CODE_BUNRUI_SYO       = 'CaseCategory_Small'; // 分析用小分類
 // ### 環境が変わったら主に直すところ ###
 const CONF_SEARCH           = ['msbox', 'Lookup'];  // 検索対象のフィールドコード
 const CONF_MEMO_RECORDID    = 9;                    // 共有メモが内部的に使用するレコードID
-const SPLIT_WORD            = '　＞　';             // 分類分割の文字列
+const CONF_SPLIT_WORD       = '　＞　';             // 分類分割の文字列
+const CONF_FORMATRULE       = {
+                                'rule1': {
+                                    'code': 'NextActionSchedule',
+                                    'formula': '=',
+                                    'value': 'TODAY',
+                                    'font': '#00008B',
+                                    'bg': '#87CEFA'
+                                }
+                              };
 
 /** ============================================================================
  * 
@@ -172,11 +182,34 @@ const splitCaseCategory = (event) => {
     let caseCategory = event.record[CODE_BUNRUI]['value'];
     if(caseCategory){
         // 特定文字で2分割
-        event.record[CODE_BUNRUI_DAI]['value'] = caseCategory.split(SPLIT_WORD)[0];
-        event.record[CODE_BUNRUI_SYO]['value'] = caseCategory.split(SPLIT_WORD)[1];
+        event.record[CODE_BUNRUI_DAI]['value'] = caseCategory.split(CONF_SPLIT_WORD)[0];
+        event.record[CODE_BUNRUI_SYO]['value'] = caseCategory.split(CONF_SPLIT_WORD)[1];
     } else {
         event.record[CODE_BUNRUI_DAI]['value'] = '';
         event.record[CODE_BUNRUI_SYO]['value'] = '';
+    }
+    
+    return;
+}
+
+/** ============================================================================
+ * 
+ * 04. 条件付き書式
+ * 
+ * ===========================================================================*/
+ 
+/**
+ * 対応状況に応じて文字・背景色を変える
+ */
+const changeRecordColor = (event) => {
+    outLog('run changeRecordColor()');
+    console.log(event);
+    
+    for(let k in CONF_FORMATRULE){
+        // 要素取得
+        let elm = kintone.app.getFieldElements(CONF_FORMATRULE[k]['code']);
+        console.log(elm);
+        
     }
     
     return;
@@ -262,13 +295,15 @@ runMainFunc();
 /**
  * レコード一覧画面の表示後イベント
  */
-kintone.events.on('app.record.index.show', async () => {
-    outLog('Kintone Event app.record.index.show');
+kintone.events.on('app.record.index.show', async (event) => {
+    outLog(`kintone event ${event['type']}`);
     
     // ヘッダースペース取得
     const HEADER = await kintone.app.getHeaderMenuSpaceElement();
     // 検索フォーム生成
     await addSearchForm(HEADER);
+    // 条件付き書式適用
+    await changeRecordColor(event);
     
     return;
 });
