@@ -22,11 +22,11 @@ const APP_ID   = kintone.app.getId();
 const ELMID_SEARCH = 'searchbox'; // 検索入力欄のID
 
 // Kintoneフィールドコード
-const CODE_TANTOSHA      = 'Users';
-const CODE_TANTOSHA_COPY = 'CopyofUsers';
+const CODE_TANTOSHA         = 'Users';          // 担当者
+const CODE_TANTOSHA_COPY    = 'CopyofUsers';    // 担当者コピー先
 
 
-// ### 状況が変わったらここを直せばOK ###
+// ### 環境が変わったら主に直すところ ###
 const CONF_SEARCH = ['msbox', 'Lookup']; // 検索対象のフィールドコード
 const CONF_MEMO_RECORDID = 9;            // 共有メモが内部的に使用するレコードID
 
@@ -137,7 +137,8 @@ const onEnter = () => {
  */
 const copyCaseOwner = (event) => {
     outLog('run copyCaseOwner()');
-    let caseOwner = event.record[FIELD_TANTOSYA]['value'];
+    
+    let caseOwner = event.record[CODE_TANTOSHA]['value'];
     let copy = '';
 
     // 複数人いたら全部コピー
@@ -147,7 +148,7 @@ const copyCaseOwner = (event) => {
     // 最後のカンマは削除
     copy = copy.slice(0, -1);
 
-    event.record[FIELD_TANTOSYA_COPY]['value'] = copy;
+    event.record[CODE_TANTOSHA_COPY]['value'] = copy;
     return;
 }
 
@@ -229,9 +230,9 @@ const runMainFunc = async () => {
 runMainFunc();
 
 /**
- * レコード一覧画面
+ * レコード一覧画面の表示後イベント
  */
-kintone.events.on('app.record.index.show', async function () {
+kintone.events.on('app.record.index.show', async () => {
     outLog('Kintone Event app.record.index.show');
     
     // ヘッダースペース取得
@@ -239,25 +240,17 @@ kintone.events.on('app.record.index.show', async function () {
     // 検索フォーム生成
     await addSearchForm(HEADER);
     
+    return;
 });
  
-// const testFunc = () => {
-//     outLog('run testFunc()');
-// }
-//kintone.events.on('app.record.index.show', testFunc());//async () => {
-////    outLog('Kintone Event app.record.index.show');
-//    
-//    // 非同期処理を制御
-//    // appRecordIndexShow();
-//
-////});
-//const appRecordIndexShow = async () => {
-//    // ヘッダースペース取得
-//    const HEADER = await kintone.app.getHeaderMenuSpaceElement();
-//    // 検索フォーム生成
-//    await addSearchForm(HEADER);
-//    // 共有メモフォーム生成
-//    await addMemoForm();
-//    
-//    return;
-//}
+/**
+ * レコード追加画面の保存実行前イベント
+ */
+kintone.events.on('app.record.create.submit', async (event) => {
+    outLog('Kintone Event app.record.create.submit');
+    
+    // 担当者コピー
+    await CopyofUsers(event);
+    
+    return;
+});
