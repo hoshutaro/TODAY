@@ -233,6 +233,12 @@ runMainFunc();
  */
 kintone.events.on('app.record.index.show', async function () {
     outLog('Kintone Event app.record.index.show');
+    
+    // ヘッダースペース取得
+    const HEADER = await kintone.app.getHeaderMenuSpaceElement();
+    // 検索フォーム生成
+    await addSearchForm(HEADER);
+    
 });
  
 // const testFunc = () => {
