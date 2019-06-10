@@ -234,10 +234,9 @@ runMainFunc();
 kintone.events.on('app.record.index.show', async (event) => {
     outLog('Kintone Event app.record.index.show');
     
-    // 非同期処理を制御s
+    // 非同期処理を制御
     // appRecordIndexShow();
 
-    return event;
 });
 const appRecordIndexShow = async () => {
     // ヘッダースペース取得
