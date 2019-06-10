@@ -254,3 +254,15 @@ kintone.events.on('app.record.create.submit', async (event) => {
     
     return;
 });
+
+/**
+ * レコード編集画面の保存実行前イベント
+ */
+kintone.events.on('app.record.edit.submit', async (event) => {
+    outLog('Kintone Event app.record.edit.submit');
+    
+    // 担当者コピー
+    await copyCaseOwner(event);
+    
+    return;
+});
