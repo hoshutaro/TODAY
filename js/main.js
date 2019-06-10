@@ -231,7 +231,7 @@ runMainFunc();
 /**
  * レコード一覧画面
  */
-kintone.events.on('app.record.index.show', function () {
+kintone.events.on('app.record.index.show', async function () {
     outLog('Kintone Event app.record.index.show');
 });
  
