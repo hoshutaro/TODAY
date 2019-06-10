@@ -3,6 +3,7 @@
  * TODAY魔改造Javascript
  * 01. 簡易検索（特定フィールドを対象とした単語検索）
  * 02. 担当者ソート（担当者をソート用フィールドへコピー）
+ * 03. 分類分割
  * xx. 共有メモ
  * 
  * ===========================================================================*/
@@ -24,12 +25,14 @@ const ELMID_SEARCH = 'searchbox'; // 検索入力欄のID
 // Kintoneフィールドコード
 const CODE_TANTOSHA         = 'CaseOwner';          // 担当者
 const CODE_TANTOSHA_COPY    = 'CopyOfCaseOwner';    // 担当者コピー先
-
+const CODE_BUNRUI           = 'CaseCategory';       // 分類
+const CODE_BUNRUI_DAI       = 'CaseCategory_Large'; // 分析用大分類
+const CODE_BUNRUI_SYO       = 'CaseCategory_Small'; // 分析用小分類
 
 // ### 環境が変わったら主に直すところ ###
-const CONF_SEARCH = ['msbox', 'Lookup']; // 検索対象のフィールドコード
-const CONF_MEMO_RECORDID = 9;            // 共有メモが内部的に使用するレコードID
-
+const CONF_SEARCH           = ['msbox', 'Lookup'];  // 検索対象のフィールドコード
+const CONF_MEMO_RECORDID    = 9;                    // 共有メモが内部的に使用するレコードID
+const SPLIT_WORD            = '　＞　';             // 分類分割の文字列
 
 /** ============================================================================
  * 
@@ -154,6 +157,27 @@ const copyCaseOwner = (event) => {
 
 /** ============================================================================
  * 
+ * 03. 分類分割
+ * 
+ * ===========================================================================*/
+ 
+/**
+ * 分類を大小に分割して分析用フィールドにコピーする
+ */
+const splitCaseCategory = (event) => {
+    outLog('run splitCaseCategory()');
+    
+    let caseCategory = event.record[CODE_BUNRUI]['value'];
+    
+    // 特定文字で2分割
+    event.record[CODE_BUNRUI_DAI]['value'] = caseCategory.split(SPLIT_WORD)[0];
+    event.record[CODE_BUNRUI_SYO]['value'] = caseCategory.split(SPLIT_WORD)[1];
+    
+    return;
+}
+
+/** ============================================================================
+ * 
  * xx. 共有メモ
  * 
  * ===========================================================================*/
@@ -245,12 +269,15 @@ kintone.events.on('app.record.index.show', async () => {
  
 /**
  * レコード追加画面の保存実行前イベント
+ * レコード編集画面の保存実行前イベント
  */
-kintone.events.on('app.record.create.submit', async (event) => {
+kintone.events.on(['app.record.create.submit','app.record.edit.submit'], async (event) => {
     outLog('Kintone Event app.record.create.submit');
     
     // 担当者コピー
     await copyCaseOwner(event);
+    // 分類分割
+    await splitCaseCategory(event);
     
     return event;
 });
@@ -258,11 +285,13 @@ kintone.events.on('app.record.create.submit', async (event) => {
 /**
  * レコード編集画面の保存実行前イベント
  */
-kintone.events.on('app.record.edit.submit', async (event) => {
-    outLog('Kintone Event app.record.edit.submit');
-    
-    // 担当者コピー
-    await copyCaseOwner(event);
-    
-    return event;
-});
+//kintone.events.on('app.record.edit.submit', async (event) => {
+//    outLog('Kintone Event app.record.edit.submit');
+//    
+//    // 担当者コピー
+//    await copyCaseOwner(event);
+//    // 分類分割
+//    await splitCaseCategory(event);
+//    
+//    return event;
+//});
