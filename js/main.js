@@ -252,7 +252,7 @@ kintone.events.on('app.record.create.submit', async (event) => {
     // 担当者コピー
     await copyCaseOwner(event);
     
-    return;
+    return event;
 });
 
 /**
@@ -264,5 +264,5 @@ kintone.events.on('app.record.edit.submit', async (event) => {
     // 担当者コピー
     await copyCaseOwner(event);
     
-    return;
+    return event;
 });
