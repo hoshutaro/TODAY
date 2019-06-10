@@ -22,8 +22,8 @@ const APP_ID   = kintone.app.getId();
 const ELMID_SEARCH = 'searchbox'; // 検索入力欄のID
 
 // Kintoneフィールドコード
-const CODE_TANTOSHA         = 'Users';          // 担当者
-const CODE_TANTOSHA_COPY    = 'CopyofUsers';    // 担当者コピー先
+const CODE_TANTOSHA         = 'CaseOwner';          // 担当者
+const CODE_TANTOSHA_COPY    = 'CopyOfCaseOwner';    // 担当者コピー先
 
 
 // ### 環境が変わったら主に直すところ ###
