@@ -234,7 +234,7 @@ runMainFunc();
  const testFunc = () => {
      outLog('run testFunc()');
  }
-kintone.events.on('app.record.index.show', testFunc())//async () => {
+kintone.events.on('app.record.index.show', testFunc());//async () => {
 //    outLog('Kintone Event app.record.index.show');
     
     // 非同期処理を制御
