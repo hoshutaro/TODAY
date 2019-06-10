@@ -250,7 +250,7 @@ kintone.events.on('app.record.create.submit', async (event) => {
     outLog('Kintone Event app.record.create.submit');
     
     // 担当者コピー
-    await CopyofUsers(event);
+    await copyCaseOwner(event);
     
     return;
 });
