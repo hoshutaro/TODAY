@@ -231,23 +231,27 @@ runMainFunc();
 /**
  * レコード一覧画面
  */
- const testFunc = () => {
-     outLog('run testFunc()');
- }
-kintone.events.on('app.record.index.show', testFunc());//async () => {
-//    outLog('Kintone Event app.record.index.show');
-    
-    // 非同期処理を制御
-    // appRecordIndexShow();
-
-//});
-const appRecordIndexShow = async () => {
-    // ヘッダースペース取得
-    const HEADER = await kintone.app.getHeaderMenuSpaceElement();
-    // 検索フォーム生成
-    await addSearchForm(HEADER);
-    // 共有メモフォーム生成
-    await addMemoForm();
-    
-    return;
-}
+kintone.events.on('app.record.index.show', function () {
+    outLog('Kintone Event app.record.index.show');
+});
+ 
+// const testFunc = () => {
+//     outLog('run testFunc()');
+// }
+//kintone.events.on('app.record.index.show', testFunc());//async () => {
+////    outLog('Kintone Event app.record.index.show');
+//    
+//    // 非同期処理を制御
+//    // appRecordIndexShow();
+//
+////});
+//const appRecordIndexShow = async () => {
+//    // ヘッダースペース取得
+//    const HEADER = await kintone.app.getHeaderMenuSpaceElement();
+//    // 検索フォーム生成
+//    await addSearchForm(HEADER);
+//    // 共有メモフォーム生成
+//    await addMemoForm();
+//    
+//    return;
+//}
