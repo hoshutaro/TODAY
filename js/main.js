@@ -234,8 +234,17 @@ runMainFunc();
 kintone.events.on('app.record.index.show', (event) => {
     outLog('Kintone Event app.record.index.show');
     
+    const syncFunc = async () => {
+        // ヘッダースペース取得
+        const HEADER = await kintone.app.getHeaderMenuSpaceElement();
+        // 検索フォーム生成
+        await addSearchForm(HEADER);
+        
+        return;
+    }
+    
     // 非同期処理を制御
-    appRecordIndexShow();
+    // appRecordIndexShow();
 
     return event;
 });
