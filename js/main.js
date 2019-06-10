@@ -144,7 +144,7 @@ const copyCaseOwner = (event) => {
     let caseOwner = event.record[CODE_TANTOSHA]['value'];
     let copy = '';
     
-    if(!caseOwner){
+    if(caseOwner){
         // 複数人いたら全部コピー
         for(let i=0; i<caseOwner.length; i++){
             copy = copy + caseOwner[i]['name'] + ',';
@@ -170,7 +170,7 @@ const splitCaseCategory = (event) => {
     outLog('run splitCaseCategory()');
     
     let caseCategory = event.record[CODE_BUNRUI]['value'];
-    if(!caseCategory){
+    if(caseCategory){
         // 特定文字で2分割
         event.record[CODE_BUNRUI_DAI]['value'] = caseCategory.split(SPLIT_WORD)[0];
         event.record[CODE_BUNRUI_SYO]['value'] = caseCategory.split(SPLIT_WORD)[1];
