@@ -231,13 +231,16 @@ runMainFunc();
 /**
  * レコード一覧画面
  */
-kintone.events.on('app.record.index.show', async () => {
-    outLog('Kintone Event app.record.index.show');
+ const testFunc = () => {
+     outLog('run testFunc()');
+ }
+kintone.events.on('app.record.index.show', testFunc())//async () => {
+//    outLog('Kintone Event app.record.index.show');
     
     // 非同期処理を制御
     // appRecordIndexShow();
 
-});
+//});
 const appRecordIndexShow = async () => {
     // ヘッダースペース取得
     const HEADER = await kintone.app.getHeaderMenuSpaceElement();
